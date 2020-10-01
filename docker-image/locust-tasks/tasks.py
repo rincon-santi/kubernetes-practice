@@ -7,7 +7,7 @@ Created on Tue Sep 29 13:13:44 2020
 """
 
 import time
-from locust import HttpUser, task, between
+from locust import HttpLocust, TaskSet, task, between
 import random
 import re
 from xeger import Xeger
@@ -15,7 +15,7 @@ from xeger import Xeger
 
 REGEX_URL="^(?:http|ftp)s?://(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+(?:[A-Za-z]{2,6}\.?|[A-Za-z0-9-]{2,}\.?)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::\d+)?(?:/?|[/?]\S+)$"
 
-class QuickstartUser(HttpUser):
+class MetricsTaskSet(TaskSet):
     wait_time = between(1, 2)
     
     def generateUID(self):
@@ -77,3 +77,6 @@ class QuickstartUser(HttpUser):
     def on_start(self):
         self.uid = self.generateUID()
         self.products = self.generateProducts()
+        
+class MetricsLocust(HttpLocust):
+    task_set = MetricsTaskSet
