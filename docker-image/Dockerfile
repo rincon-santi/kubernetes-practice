@@ -14,7 +14,7 @@
 
 
 # Start with a base Python 3.6 image
-FROM python:3.6
+FROM python:3.6.0
 
 # Add the licenses for third party software and libraries
 ADD licenses /licenses
